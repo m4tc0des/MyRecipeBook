@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+# Ignorar configurações sensíveis de desenvolvimento
+**/appsettings.Development.json
+
+# Ignorar segredos do usuário do VS
+**/secrets.json
+
+# Docker:
+.env
