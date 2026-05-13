@@ -12,8 +12,9 @@ namespace MyRecipeBook.Api.Controllers
         public IActionResult Register([FromBody]RequestRegisterUserJson request)
         {
             var useCase = new RegisterUserUseCase();
+
             useCase.Execute(request);
-            // Placeholder for user creation logic
+            
             return Created();
         }
     }
