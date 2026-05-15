@@ -3,10 +3,13 @@ using MyRecipeBook.Application.UseCases.User.Register;
 
 namespace MyRecipeBook.Application;
 
-public class DependencyInjectionExtension
+public static class DependencyInjectionExtension
 {
-    public static void AddApplication(IServiceCollection services)
+    extension(IServiceCollection services)
     {
-        services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+        public void AddApplication()
+        {
+            services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+        }
     }
 }
