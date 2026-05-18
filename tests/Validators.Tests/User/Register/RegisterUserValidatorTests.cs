@@ -3,7 +3,7 @@ using MyRecipeBook.Application.UseCases.User.Register;
 using MyRecipeBook.Exceptions;
 using Shouldly;
 
-namespace Validators.Testes.User.Register;
+namespace Validators.Tests.User.Register;
 
 public class RegisterUserValidatorTests
 {
