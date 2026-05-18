@@ -70,6 +70,15 @@ namespace MyRecipeBook.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The email already in use..
+        /// </summary>
+        public static string VALIDATION_EMAIL_ALREADY_EXISTS {
+            get {
+                return ResourceManager.GetString("VALIDATION_EMAIL_ALREADY_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The mail is invalid..
         /// </summary>
         public static string VALIDATION_EMAIL_INVALID {
