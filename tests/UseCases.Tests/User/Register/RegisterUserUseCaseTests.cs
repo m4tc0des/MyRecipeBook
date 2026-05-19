@@ -1,5 +1,8 @@
-﻿using CommonTestUtilities.Requests;
+﻿using CommonTestUtilities.Repositories;
+using CommonTestUtilities.Requests;
+using CommonTestUtilities.Security;
 using MyRecipeBook.Application.UseCases.User.Register;
+using MyRecipeBook.Domain.Repositories;
 
 namespace UseCases.Tests.User.Register;
 
@@ -15,6 +18,11 @@ public class RegisterUserUseCaseTests
 
     private RegisterUserUseCase CreateUseCase()
     {
-        return new RegisterUserUseCase(null, null, null, null);
+        var userWriteOnlyRepository = IUserWriteOnlyRepositoryBuilder.Build();
+        var userReadOnlyRepository = new IUserReadOnlyRepositoryBuilder().Build();
+        var unitOfWork = IUnitOfWorkBuilder.Build();
+        var passwordHasher = new IPasswordHasherBuilder().Build();
+
+        return new RegisterUserUseCase( passwordHasher, userWriteOnlyRepository, userReadOnlyRepository, unitOfWork);
     }
 }
