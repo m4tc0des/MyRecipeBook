@@ -2,6 +2,7 @@
 using CommonTestUtilities.Requests;
 using CommonTestUtilities.Security;
 using MyRecipeBook.Application.UseCases.User.Register;
+using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Domain.Repositories;
 using MyRecipeBook.Exceptions;
 using MyRecipeBook.Exceptions.ExceptionBase;
@@ -46,13 +47,34 @@ public class RegisterUserUseCaseTests
         });
     }
 
-    private RegisterUserUseCase CreateUseCase()
+    [Fact]
+    public async Task Validate_ShouldThrowException_WhenEmailAlreadyExists()
     {
-        var userWriteOnlyRepository = IUserWriteOnlyRepositoryBuilder.Build();
-        var userReadOnlyRepository = new IUserReadOnlyRepositoryBuilder().Build();
-        var unitOfWork = IUnitOfWorkBuilder.Build();
-        var passwordHasher = new IPasswordHasherBuilder().Build();
+        var request = RequestRegisterUserJsonBuilder.Build();
 
-        return new RegisterUserUseCase(passwordHasher, userWriteOnlyRepository, userReadOnlyRepository, unitOfWork);
+        var useCase = CreateUseCase(request.Email);
+
+        var exception = await useCase.Execute(request).ShouldThrowAsync<ErrorOnValidationException>();
+
+        exception.GetErrorMessages().ShouldSatisfyAllConditions(condition =>
+        {
+            condition.Count.ShouldBe(1);
+            condition.ShouldContain(ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS);
+        });
+    }
+
+    private RegisterUserUseCase CreateUseCase(string? emailThatAlreadyExists = null)
+    {
+        var unitOfWork = IUnitOfWorkBuilder.Build();
+        var userWriteOnlyRepository = IUserWriteOnlyRepositoryBuilder.Build();
+        var passwordHasher = new IPasswordHasherBuilder().Build();
+        var userReadOnlyRepositoryBuilder = new IUserReadOnlyRepositoryBuilder();
+
+        if (emailThatAlreadyExists.IsNotEmpty())
+        {
+            userReadOnlyRepositoryBuilder.ExistActiveUserWithEmail(emailThatAlreadyExists);
+        }
+
+        return new RegisterUserUseCase(passwordHasher, userWriteOnlyRepository, userReadOnlyRepositoryBuilder.Build(), unitOfWork);
     }
 }
