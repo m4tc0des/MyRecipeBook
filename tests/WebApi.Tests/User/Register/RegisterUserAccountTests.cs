@@ -1,12 +1,20 @@
-﻿using CommonTestUtilities.Requests;
+﻿using Azure;
+using CommonTestUtilities.Requests;
 using Microsoft.AspNetCore.Mvc.Testing;
+using MyRecipeBook.Domain.Extensions;
+using MyRecipeBook.Exceptions;
+using Shouldly;
+using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace WebApi.Tests.User.Register;
 
 public class RegisterUserAccountTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly HttpClient _httpClient;
+    private const string REQUEST_URI = "users";
+
     public RegisterUserAccountTests(WebApplicationFactory<Program> factory)
     {
         _httpClient = factory.CreateClient();
@@ -17,16 +25,40 @@ public class RegisterUserAccountTests : IClassFixture<WebApplicationFactory<Prog
     {
         var request = RequestRegisterUserJsonBuilder.Build();
 
-        await _httpClient.PostAsJsonAsync("/users", request);
+        var response = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+
+        response.StatusCode.ShouldBe(HttpStatusCode.Created);
+
+        await using var responseBody = await response.Content.ReadAsStreamAsync();
+
+        var respondeData = await JsonDocument.ParseAsync(responseBody);
+
+        respondeData.RootElement.GetProperty("name").GetString().ShouldBe(request.Name);
+
+        respondeData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldBeEmpty();
     }
 
     [Fact]
-    public async Task Validate_ShouldBeErrorResponse_WhenNameIsEmpty()
+    public async Task Validate_ShouldBeErrorResponse_When_NameIsEmpty()
     {
         var request = RequestRegisterUserJsonBuilder.Build();
 
         request.Name = string.Empty;
 
-        await _httpClient.PostAsJsonAsync("/users", request);
+        var response = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+
+        response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+
+        await using var responseBody = await response.Content.ReadAsStreamAsync();
+
+        var respondeData = await JsonDocument.ParseAsync(responseBody);
+
+        var errors = respondeData.RootElement.GetProperty("errors").EnumerateArray();
+
+        errors.ShouldSatisfyAllConditions(errorsList =>
+        {
+            errorsList.Count().ShouldBe(1);
+            errorsList.ShouldContain(error => error.GetString().IsNotEmpty() && error.GetString()!.Equals(ResourceMessagesException.VALIDATION_NAME_REQUIRED));
+        });
     }
 }
