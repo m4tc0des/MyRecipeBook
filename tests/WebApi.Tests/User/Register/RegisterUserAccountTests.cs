@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using WebApi.Tests.InlineData;
 
 namespace WebApi.Tests.User.Register;
 
@@ -38,19 +39,20 @@ public class RegisterUserAccountTests : IClassFixture<WebApplicationFactory<Prog
         respondeData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldBeEmpty();
     }
 
-    [Fact]
-    public async Task Validate_ShouldBeErrorResponse_When_NameIsEmpty()
+    [Theory]
+    [ClassData(typeof(CultureInlineData))]
+    public async Task Validate_ShouldBeErrorResponse_When_NameIsEmpty(string culture)
     {
         var request = RequestRegisterUserJsonBuilder.Build();
 
         request.Name = string.Empty;
 
         _httpClient.DefaultRequestHeaders.AcceptLanguage.Clear();
-        _httpClient.DefaultRequestHeaders.AcceptLanguage.ParseAdd("es");
+        _httpClient.DefaultRequestHeaders.AcceptLanguage.ParseAdd(culture);
 
         var response = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
 
-        var expectedErrorMessage = ResourceMessagesException.ResourceManager.GetString("VALIDATION_NAME_REQUIRED", new CultureInfo("es"));
+        var expectedErrorMessage = ResourceMessagesException.ResourceManager.GetString("VALIDATION_NAME_REQUIRED", new CultureInfo(culture));
 
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 

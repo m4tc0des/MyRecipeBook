@@ -2,13 +2,14 @@
 using MyRecipeBook.Application.UseCases.User.Register;
 using MyRecipeBook.Exceptions;
 using Shouldly;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Validators.Tests.User.Register;
 
-public class RegisterUserValidatorTests
+public class RegisterUserValidatorTests //AAA A = Arange A = Act A = Assert
 {
     [Fact]
-    public void Success() //AAA A = Arange A = Act A = Assert
+    public void Success()
     {
         var request = RequestRegisterUserJsonBuilder.Build();
 
@@ -19,12 +20,16 @@ public class RegisterUserValidatorTests
         result.IsValid.ShouldBeTrue();
     }
 
-    [Fact]
-    public void Validate_ShouldHaveError_When_NameIsEmpty()
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    [InlineData("       ")]
+    [SuppressMessage("Usage", "xUnit1012:Null should only be used for nullable parameters", Justification = "Intencional because is a unit test")]
+    public void Validate_ShouldHaveError_When_NameIsEmpty(string name)
     {
         var request = RequestRegisterUserJsonBuilder.Build();
 
-        request.Name = string.Empty;
+        request.Name = name;
 
         var validator = new RegisterUserValidator();
 
@@ -39,12 +44,16 @@ public class RegisterUserValidatorTests
         });
     }
 
-    [Fact]
-    public void Validate_ShouldHaveError_When_EmailIsEmpty()
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    [InlineData("       ")]
+    [SuppressMessage("Usage", "xUnit1012:Null should only be used for nullable parameters", Justification = "Intencional because is a unit test")]
+    public void Validate_ShouldHaveError_When_EmailIsEmpty(string email)
     {
         var request = RequestRegisterUserJsonBuilder.Build();
 
-        request.Email = string.Empty;
+        request.Email = email;
 
         var validator = new RegisterUserValidator();
 
@@ -83,15 +92,15 @@ public class RegisterUserValidatorTests
     public void Validate_ShouldHaveError_When_EmailIsInvalid()
     {
         var request = RequestRegisterUserJsonBuilder.Build();
-        
+
         request.Email = "invalid-email";
-        
+
         var validator = new RegisterUserValidator();
-        
+
         var result = validator.Validate(request);
-        
+
         result.IsValid.ShouldBeFalse();
-        
+
         result.Errors.ShouldSatisfyAllConditions(erros =>
         {
             erros.Count.ShouldBe(1);
