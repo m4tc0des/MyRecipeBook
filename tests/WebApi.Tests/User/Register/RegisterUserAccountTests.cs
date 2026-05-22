@@ -1,9 +1,9 @@
-﻿using Azure;
-using CommonTestUtilities.Requests;
+﻿using CommonTestUtilities.Requests;
 using Microsoft.AspNetCore.Mvc.Testing;
 using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Exceptions;
 using Shouldly;
+using System.Globalization;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -45,7 +45,12 @@ public class RegisterUserAccountTests : IClassFixture<WebApplicationFactory<Prog
 
         request.Name = string.Empty;
 
+        _httpClient.DefaultRequestHeaders.AcceptLanguage.Clear();
+        _httpClient.DefaultRequestHeaders.AcceptLanguage.ParseAdd("es");
+
         var response = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+
+        var expectedErrorMessage = ResourceMessagesException.ResourceManager.GetString("VALIDATION_NAME_REQUIRED", new CultureInfo("es"));
 
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
@@ -58,7 +63,7 @@ public class RegisterUserAccountTests : IClassFixture<WebApplicationFactory<Prog
         errors.ShouldSatisfyAllConditions(errorsList =>
         {
             errorsList.Count().ShouldBe(1);
-            errorsList.ShouldContain(error => error.GetString().IsNotEmpty() && error.GetString()!.Equals(ResourceMessagesException.VALIDATION_NAME_REQUIRED));
+            errorsList.ShouldContain(error => error.GetString().IsNotEmpty() && error.GetString()!.Equals(expectedErrorMessage));
         });
     }
 }
