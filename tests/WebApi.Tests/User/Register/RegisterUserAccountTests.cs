@@ -16,7 +16,7 @@ public class RegisterUserAccountTests : IClassFixture<MyRecipeBookApplicationFac
     private readonly HttpClient _httpClient;
     private const string REQUEST_URI = "users";
 
-    public RegisterUserAccountTests(WebApplicationFactory<Program> factory)
+    public RegisterUserAccountTests(MyRecipeBookApplicationFactory factory)
     {
         _httpClient = factory.CreateClient();
     }

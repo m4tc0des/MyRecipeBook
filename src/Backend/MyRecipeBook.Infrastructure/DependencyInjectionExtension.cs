@@ -31,7 +31,12 @@ public static class DependencyInjectionExtension
             services.AddFluentMigratorCore().ConfigureRunner(options =>
             {
                 options.AddMySql5()
-                    .WithGlobalConnectionString(configuration.GetConnectionString("DbConnection")!)
+                    .WithGlobalConnectionString(_ =>
+                    {
+                        var connectionString = configuration.GetConnectionString("DbConnection")!;
+
+                        return connectionString;
+                    })
                     .ScanIn(Assembly.Load("MyRecipeBook.Infrastructure"))
                     .For.All();
             });
