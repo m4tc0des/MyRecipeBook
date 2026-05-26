@@ -5,7 +5,7 @@ using MyRecipeBook.Infrastructure.DataAcess;
 
 namespace MyRecipeBook.Infrastructure.Repositories;
 
-internal sealed class UserRepository: IUserWriteOnlyRepository, IUserReadOnlyRepository
+internal sealed class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository
 {
     private readonly MyRecipeBookDbContext _dbContext;
     public UserRepository(MyRecipeBookDbContext dbContext)
@@ -21,5 +21,10 @@ internal sealed class UserRepository: IUserWriteOnlyRepository, IUserReadOnlyRep
     public async Task<bool> ExistActiveUserWithEmail(string email)
     {
         return await _dbContext.Users.AnyAsync(user => user.Active && user.Email.Equals(email));
+    }
+
+    public async Task<User?> GetByEmail(string email)
+    {
+        return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Active && user.Email.Equals(email));
     }
 }
