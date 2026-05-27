@@ -135,4 +135,7 @@
   <data name="VALIDATION_PASSWORD_REQUIRED" xml:space="preserve">
     <value>A senha é obrigatória.</value>
   </data>
+  <data name="VALIDATION_LOGIN_INVALID" xml:space="preserve">
+    <value>O login ou senha é inválido.</value>
+  </data>
 </root>

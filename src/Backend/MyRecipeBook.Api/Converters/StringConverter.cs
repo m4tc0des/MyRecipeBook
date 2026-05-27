@@ -8,13 +8,12 @@ public partial class StringConverter : JsonConverter<string>
 {
     public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        var value = reader.GetString()?.Trim(); // remove leading and trailing whitespace
-
+        var value = reader.GetString()?.Trim(); 
         if (value is null)
         {
             return value;
         }
-        return RemoveExtraBlankSpace().Replace(value, " "); // replace multiple whitespace characters with a single space
+        return RemoveExtraBlankSpace().Replace(value, " "); 
     }
 
     public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options)

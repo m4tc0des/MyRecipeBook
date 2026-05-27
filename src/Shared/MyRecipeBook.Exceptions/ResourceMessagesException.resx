@@ -135,4 +135,7 @@
   <data name="VALIDATION_PASSWORD_REQUIRED" xml:space="preserve">
     <value>The password is required.</value>
   </data>
+  <data name="VALIDATION_LOGIN_INVALID" xml:space="preserve">
+    <value>The email or password is invalid.</value>
+  </data>
 </root>
