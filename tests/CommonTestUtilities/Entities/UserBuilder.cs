@@ -6,7 +6,7 @@ namespace CommonTestUtilities.Entities;
 
 public class UserBuilder
 {
-    public static User Builder()
+    public static User Build()
     {
         return new Faker<User>()
             .RuleFor(user => user.Name, faker => faker.Person.FirstName)
