@@ -61,6 +61,8 @@ public class LoginWithEmailAndPasswordUseCaseTests
 
         var exception = await useCase.Execute(request).ShouldThrowAsync<InvalidLoginException>();
 
+        exception.GetStatusCode().ShouldBe(System.Net.HttpStatusCode.Unauthorized);
+
         exception.GetErrorMessages().ShouldSatisfyAllConditions(errorMessage =>
         {
             errorMessage.Count.ShouldBe(1);
