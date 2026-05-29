@@ -124,7 +124,7 @@
     <value>The email already in use.</value>
   </data>
   <data name="VALIDATION_EMAIL_INVALID" xml:space="preserve">
-    <value>The mail is invalid.</value>
+    <value>The email is invalid.</value>
   </data>
   <data name="VALIDATION_EMAIL_REQUIRED" xml:space="preserve">
     <value>The email is required.</value>

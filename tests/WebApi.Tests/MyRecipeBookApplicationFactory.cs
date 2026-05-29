@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using MyRecipeBook.Infrastructure.DataAcess;
 using Testcontainers.MySql;
 
 namespace WebApi.Tests;
@@ -33,6 +35,10 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
     public async Task InitializeAsync()
     {
         await _mySqlContainer.StartAsync();
+
+        await using var scope = Services.CreateAsyncScope();
+
+        var dbContext = scope.ServiceProvider.GetRequiredService<MyRecipeBookDbContext>();
     }
 
     Task IAsyncLifetime.DisposeAsync()
