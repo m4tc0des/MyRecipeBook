@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using CommonTestUtilities.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +40,12 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
         await using var scope = Services.CreateAsyncScope();
 
         var dbContext = scope.ServiceProvider.GetRequiredService<MyRecipeBookDbContext>();
+
+        var user = UserBuilder.Build();
+
+        await dbContext.Users.AddAsync(user);
+
+        await dbContext.SaveChangesAsync();
     }
 
     Task IAsyncLifetime.DisposeAsync()
