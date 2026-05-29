@@ -41,7 +41,7 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
 
         var dbContext = scope.ServiceProvider.GetRequiredService<MyRecipeBookDbContext>();
 
-        var user = UserBuilder.Build();
+        var (user, password) = UserBuilder.Build();
 
         await dbContext.Users.AddAsync(user);
 
