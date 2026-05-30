@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyRecipeBook.Domain.Security.PasswordHashing;
 using MyRecipeBook.Infrastructure.DataAcess;
 using Testcontainers.MySql;
 
@@ -41,7 +42,11 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
 
         var dbContext = scope.ServiceProvider.GetRequiredService<MyRecipeBookDbContext>();
 
+        var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+
         var (user, password) = UserBuilder.Build();
+
+        user.Password = passwordHasher.HashPassword(password);
 
         await dbContext.Users.AddAsync(user);
 
