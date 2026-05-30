@@ -6,16 +6,17 @@ using Microsoft.Extensions.DependencyInjection;
 using MyRecipeBook.Domain.Security.PasswordHashing;
 using MyRecipeBook.Infrastructure.DataAcess;
 using Testcontainers.MySql;
+using WebApi.Tests.Resources;
 
 namespace WebApi.Tests;
 
 public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
+    public UserIdentityManager User_One { get; private set; }
+
     private readonly MySqlContainer _mySqlContainer;
     public MyRecipeBookApplicationFactory()
     {
-        //var mysql = new MySQLContainer(DockerImageName.parse("mysql:5.7.34"));
-        //mysql.start();
         _mySqlContainer = new MySqlBuilder("mysql:8.0")
             .WithDatabase("meulivrodereceitas")
             .Build();
@@ -51,6 +52,8 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
         await dbContext.Users.AddAsync(user);
 
         await dbContext.SaveChangesAsync();
+
+        User_One = new UserIdentityManager(user, password);
     }
 
     Task IAsyncLifetime.DisposeAsync()

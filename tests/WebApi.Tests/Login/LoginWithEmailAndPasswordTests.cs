@@ -1,4 +1,5 @@
 ﻿using CommonTestUtilities.Requests;
+using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Exceptions;
 using Shouldly;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using WebApi.Tests.InlineData;
+using WebApi.Tests.Resources;
 
 namespace WebApi.Tests.Login;
 
@@ -16,15 +18,34 @@ public class LoginWithEmailAndPasswordTests: IClassFixture<MyRecipeBookApplicati
 
     private readonly HttpClient _httpClient;
 
+    private readonly UserIdentityManager _userOne;
+
     public LoginWithEmailAndPasswordTests(MyRecipeBookApplicationFactory factory)
     {
         _httpClient = factory.CreateClient();
+        _userOne = factory.User_One;
     }
 
     [Fact]
     public async Task Sucess()
-    { 
+    {
+        var request = new RequestLoginJson
+        {
+            Email = _userOne.GetEmail(),
+            Password = _userOne.GetPassword(),
+        };
 
+        var response = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+
+        response.StatusCode.ShouldBe(HttpStatusCode.OK);
+
+        await using var responseBody = await response.Content.ReadAsStreamAsync();
+
+        var responseData = await JsonDocument.ParseAsync(responseBody);
+
+        responseData.RootElement.GetProperty("name").GetString().ShouldBe(_userOne.GetName());
+
+        responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldBeEmpty();
     }
 
     [Theory]
