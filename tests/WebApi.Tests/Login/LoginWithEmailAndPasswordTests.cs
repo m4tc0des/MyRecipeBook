@@ -5,24 +5,19 @@ using MyRecipeBook.Exceptions;
 using Shouldly;
 using System.Globalization;
 using System.Net;
-using System.Net.Http.Json;
 using System.Text.Json;
 using WebApi.Tests.InlineData;
 using WebApi.Tests.Resources;
 
 namespace WebApi.Tests.Login;
 
-public class LoginWithEmailAndPasswordTests: IClassFixture<MyRecipeBookApplicationFactory>
+public class LoginWithEmailAndPasswordTests: BaseIntegrationTest
 {
     private const string REQUEST_URI = "/authentication";
-
-    private readonly HttpClient _httpClient;
-
     private readonly UserIdentityManager _userOne;
 
-    public LoginWithEmailAndPasswordTests(MyRecipeBookApplicationFactory factory)
+    public LoginWithEmailAndPasswordTests(MyRecipeBookApplicationFactory factory): base(factory)
     {
-        _httpClient = factory.CreateClient();
         _userOne = factory.User_One;
     }
 
@@ -35,7 +30,7 @@ public class LoginWithEmailAndPasswordTests: IClassFixture<MyRecipeBookApplicati
             Password = _userOne.GetPassword(),
         };
 
-        var response = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+        var response = await Post(REQUEST_URI, request);
 
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
 
@@ -54,10 +49,7 @@ public class LoginWithEmailAndPasswordTests: IClassFixture<MyRecipeBookApplicati
     {
         var request = RequestLoginJsonBuilder.Build(); 
 
-        _httpClient.DefaultRequestHeaders.AcceptLanguage.Clear();
-        _httpClient.DefaultRequestHeaders.AcceptLanguage.ParseAdd(culture);
-
-        var response = await _httpClient.PostAsJsonAsync(REQUEST_URI, request);
+        var response = await Post(REQUEST_URI, request, culture);
 
         var expectedErrorMessage = ResourceMessagesException.ResourceManager.GetString("VALIDATION_LOGIN_INVALID", new CultureInfo(culture));
 
