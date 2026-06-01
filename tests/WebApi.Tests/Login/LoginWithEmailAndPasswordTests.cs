@@ -11,12 +11,12 @@ using WebApi.Tests.Resources;
 
 namespace WebApi.Tests.Login;
 
-public class LoginWithEmailAndPasswordTests: BaseIntegrationTest
+public class LoginWithEmailAndPasswordTests : BaseIntegrationTest
 {
     private const string REQUEST_URI = "/authentication";
     private readonly UserIdentityManager _userOne;
 
-    public LoginWithEmailAndPasswordTests(MyRecipeBookApplicationFactory factory): base(factory)
+    public LoginWithEmailAndPasswordTests(MyRecipeBookApplicationFactory factory) : base(factory)
     {
         _userOne = factory.User_One;
     }
@@ -47,7 +47,7 @@ public class LoginWithEmailAndPasswordTests: BaseIntegrationTest
     [ClassData(typeof(CultureInlineData))]
     public async Task ShouldThrowException_When_UserDontExist(string culture)
     {
-        var request = RequestLoginJsonBuilder.Build(); 
+        var request = RequestLoginJsonBuilder.Build();
 
         var response = await Post(REQUEST_URI, request, culture);
 

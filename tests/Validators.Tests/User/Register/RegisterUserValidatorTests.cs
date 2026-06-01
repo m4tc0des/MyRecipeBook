@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Validators.Tests.User.Register;
 
-public class RegisterUserValidatorTests //AAA A = Arange A = Act A = Assert
+public class RegisterUserValidatorTests
 {
     [Fact]
     public void Success()
