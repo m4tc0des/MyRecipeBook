@@ -20,4 +20,8 @@
     <ProjectReference Include="..\MyRecipeBook.Domain\MyRecipeBook.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Security\Tokens\Refresh\" />
+  </ItemGroup>
+
 </Project>
