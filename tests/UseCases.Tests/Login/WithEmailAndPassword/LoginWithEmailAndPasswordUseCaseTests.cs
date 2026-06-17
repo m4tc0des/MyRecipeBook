@@ -72,7 +72,10 @@ public class LoginWithEmailAndPasswordUseCaseTests
 
     private LoginWithEmailAndPasswordUseCase CreateUseCase(string? password = null, MyRecipeBook.Domain.Entities.User? user = null)
     {
+        var accessTokenGenetatorBuilder = IAccessTokenGeneratorBuilder.Build();
+
         var passwordHasherBuilder = new IPasswordHasherBuilder();
+
         var userReadOnlyRepositoryBuilder = new IUserReadOnlyRepositoryBuilder();
 
         if (user is not null)
@@ -85,6 +88,6 @@ public class LoginWithEmailAndPasswordUseCaseTests
             passwordHasherBuilder.VerifyPassword(password);
         }
 
-        return new LoginWithEmailAndPasswordUseCase(passwordHasherBuilder.Build(), userReadOnlyRepositoryBuilder.Build());
+        return new LoginWithEmailAndPasswordUseCase(passwordHasherBuilder.Build(), userReadOnlyRepositoryBuilder.Build(), accessTokenGenetatorBuilder);
     }
 }

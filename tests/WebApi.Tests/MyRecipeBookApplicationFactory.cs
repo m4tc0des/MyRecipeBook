@@ -12,14 +12,12 @@ namespace WebApi.Tests;
 
 public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    public UserIdentityManager User_One { get; private set; }
+    public UserIdentityManager? User_One { get; private set; }
 
     private readonly MySqlContainer _mySqlContainer;
     public MyRecipeBookApplicationFactory()
     {
-        _mySqlContainer = new MySqlBuilder("mysql:8.0")
-            .WithDatabase("meulivrodereceitas")
-            .Build();
+        _mySqlContainer = new MySqlBuilder("mysql:8.0").WithDatabase("meulivrodereceitas").Build();
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)

@@ -49,7 +49,7 @@ public static class DependencyInjectionExtension
 
             var expirationTimeInMinutes = configuration.GetValue<uint>("JWT:ExpirationTimeMinutes");
 
-            var signingKey = configuration.GetValue<string>("JWT:SigningKey");
+            var signingKey = configuration.GetValue<string>("JWT:SigningKey")!;
 
             services.AddScoped<IAccessTokenGenerator>(provider =>
             {

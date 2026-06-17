@@ -3,11 +3,9 @@ using CommonTestUtilities.Requests;
 using CommonTestUtilities.Security;
 using MyRecipeBook.Application.UseCases.User.Register;
 using MyRecipeBook.Domain.Extensions;
-using MyRecipeBook.Domain.Repositories;
 using MyRecipeBook.Exceptions;
 using MyRecipeBook.Exceptions.ExceptionBase;
 using Shouldly;
-using Xunit.Sdk;
 
 namespace UseCases.Tests.User.Register;
 
@@ -65,9 +63,14 @@ public class RegisterUserUseCaseTests
 
     private RegisterUserUseCase CreateUseCase(string? emailThatAlreadyExists = null)
     {
+        var accessTokenGenetatorBuilder = IAccessTokenGeneratorBuilder.Build();
+
         var unitOfWork = IUnitOfWorkBuilder.Build();
+
         var userWriteOnlyRepository = IUserWriteOnlyRepositoryBuilder.Build();
+
         var passwordHasher = new IPasswordHasherBuilder().Build();
+
         var userReadOnlyRepositoryBuilder = new IUserReadOnlyRepositoryBuilder();
 
         if (emailThatAlreadyExists.IsNotEmpty())
@@ -75,6 +78,6 @@ public class RegisterUserUseCaseTests
             userReadOnlyRepositoryBuilder.ExistActiveUserWithEmail(emailThatAlreadyExists);
         }
 
-        return new RegisterUserUseCase(passwordHasher, userWriteOnlyRepository, userReadOnlyRepositoryBuilder.Build(), unitOfWork);
+        return new RegisterUserUseCase(passwordHasher, userWriteOnlyRepository, userReadOnlyRepositoryBuilder.Build(), unitOfWork, accessTokenGenetatorBuilder);
     }
 }
