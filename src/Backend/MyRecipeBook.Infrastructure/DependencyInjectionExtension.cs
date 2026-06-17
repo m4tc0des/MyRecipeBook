@@ -20,14 +20,38 @@ public static class DependencyInjectionExtension
     {
         public void AddInfrastructure(IConfiguration configuration)
         {
-            services.AddScoped<IPasswordHasher, Argon2PasswordHasher>();
+            services.AddPasswordHasher();
 
+            services.AddRepositories();
+
+            services.AddTokensHandlers(configuration);
+
+            services.AddDbContext(configuration);
+        }
+
+        private void AddRepositories()
+        {
             services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
 
             services.AddScoped<IUserReadOnlyRepository, UserRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+        }
 
+        private void AddTokensHandlers(IConfiguration configuration)
+        {
+            var expirationTimeInMinutes = configuration.GetValue<uint>("JWT:ExpirationTimeMinutes");
+
+            var signingKey = configuration.GetValue<string>("JWT:SigningKey")!;
+
+            services.AddScoped<IAccessTokenGenerator>(provider =>
+            {
+                return new JwtTokenHandler(expirationTimeInMinutes, signingKey);
+            });
+        }
+
+        private void AddDbContext(IConfiguration configuration)
+        {
             services.AddDbContext<MyRecipeBookDbContext>(options =>
             {
                 var connectionString = configuration.GetConnectionString("DbConnection");
@@ -46,15 +70,11 @@ public static class DependencyInjectionExtension
                     .ScanIn(Assembly.Load("MyRecipeBook.Infrastructure"))
                     .For.All();
             });
+        }
 
-            var expirationTimeInMinutes = configuration.GetValue<uint>("JWT:ExpirationTimeMinutes");
-
-            var signingKey = configuration.GetValue<string>("JWT:SigningKey")!;
-
-            services.AddScoped<IAccessTokenGenerator>(provider =>
-            {
-                return new JwtTokenHandler(expirationTimeInMinutes, signingKey);
-            });
+        private void AddPasswordHasher()
+        {
+            services.AddScoped<IPasswordHasher, Argon2PasswordHasher>();
         }
     }
 }
