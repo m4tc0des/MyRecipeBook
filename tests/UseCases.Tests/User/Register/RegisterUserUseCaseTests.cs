@@ -21,9 +21,13 @@ public class RegisterUserUseCaseTests
         var result = await useCase.Execute(request);
 
         result.ShouldNotBeNull();
+
         result.Tokens.ShouldNotBeNull();
+
         result.Name.ShouldBe(request.Name);
-        result.Tokens.AccessToken.ShouldBeNullOrEmpty();
+
+        result.Tokens.AccessToken.ShouldNotBeNullOrEmpty();
+
         result.Tokens.RefreshToken.ShouldBeNullOrEmpty();
     }
 
@@ -41,6 +45,7 @@ public class RegisterUserUseCaseTests
         exception.GetErrorMessages().ShouldSatisfyAllConditions(condition =>
         {
             condition.Count.ShouldBe(1);
+
             condition.ShouldContain(ResourceMessagesException.VALIDATION_NAME_REQUIRED);
         });
     }
@@ -57,6 +62,7 @@ public class RegisterUserUseCaseTests
         exception.GetErrorMessages().ShouldSatisfyAllConditions(condition =>
         {
             condition.Count.ShouldBe(1);
+
             condition.ShouldContain(ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS);
         });
     }

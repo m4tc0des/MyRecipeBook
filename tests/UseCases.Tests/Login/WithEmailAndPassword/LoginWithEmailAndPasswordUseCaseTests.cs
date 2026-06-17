@@ -26,9 +26,13 @@ public class LoginWithEmailAndPasswordUseCaseTests
         var result = await usecase.Execute(request);
 
         result.ShouldNotBeNull();
+
         result.Tokens.ShouldNotBeNull();
+
         result.Name.ShouldBe(user.Name);
-        result.Tokens.AccessToken.ShouldBeNullOrEmpty();
+
+        result.Tokens.AccessToken.ShouldNotBeNullOrEmpty();
+
         result.Tokens.RefreshToken.ShouldBeNullOrEmpty();
     }
 
@@ -44,6 +48,7 @@ public class LoginWithEmailAndPasswordUseCaseTests
         exception.GetErrorMessages().ShouldSatisfyAllConditions(errorMessage =>
         {
             errorMessage.Count.ShouldBe(1);
+
             errorMessage.ShouldContain(ResourceMessagesException.VALIDATION_LOGIN_INVALID);
         });
     }
@@ -66,6 +71,7 @@ public class LoginWithEmailAndPasswordUseCaseTests
         exception.GetErrorMessages().ShouldSatisfyAllConditions(errorMessage =>
         {
             errorMessage.Count.ShouldBe(1);
+
             errorMessage.ShouldContain(ResourceMessagesException.VALIDATION_LOGIN_INVALID);
         });
     }
