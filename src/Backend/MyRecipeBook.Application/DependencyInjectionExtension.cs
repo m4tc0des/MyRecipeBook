@@ -6,12 +6,16 @@ namespace MyRecipeBook.Application;
 
 public static class DependencyInjectionExtension
 {
-    extension(IServiceCollection services)
+
+    public static void AddApplication(this IServiceCollection services)
     {
-        public void AddApplication()
-        {
-            services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
-            services.AddScoped<ILoginWithEmailAndPasswordUseCase, LoginWithEmailAndPasswordUseCase>();
-        }
+        services.AddUseCases();
     }
+
+    public static void AddUseCases(this IServiceCollection services)
+    {
+        services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+        services.AddScoped<ILoginWithEmailAndPasswordUseCase, LoginWithEmailAndPasswordUseCase>();
+    }
+
 }
