@@ -27,7 +27,9 @@ internal sealed class JwtTokenHandler : IAccessTokenGenerator
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Expires = DateTime.UtcNow.AddMinutes(_expirationTimeMinutes),
+
             SigningCredentials = new SigningCredentials(Credentials(), SecurityAlgorithms.HmacSha256),
+
             Subject = new ClaimsIdentity(claims)
         };
 

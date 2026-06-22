@@ -49,22 +49,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             OnTokenValidated = async context =>
             {
-                var userId = context.Principal?.FindFirstValue(JwtRegisteredClaimNames.Sub) ?? context.Principal?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var subject = context.Principal?.FindFirstValue(JwtRegisteredClaimNames.Sub) ?? context.Principal?.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                if (userId.IsEmpty())
+                if (Guid.TryParse(subject, out var userId) == false)
                 {
-                    context.Fail("User not found");
+                    context.Fail("Invalid token subject");
 
                     return;
                 }
 
                 var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserReadOnlyRepository>();
 
-                var existUser = await userRepository.ExistActiveUserWithId(Guid.Parse(userId));
+                var userExist = await userRepository.ExistActiveUserWithId(userId);
 
-                if (existUser == false)
+                if (userExist == false)
                 {
-                    context.Fail("User not found");
+                    context.Fail("User not found or inactive");
                 }
             }
         };
