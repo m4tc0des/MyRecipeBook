@@ -142,6 +142,6 @@
     <value>Essa requisição precisa de um access token.</value>
   </data>
   <data name="VALIDATION_RESOURCE_ACCESS_DENIED" xml:space="preserve">
-    <value>Você nao tem acesso a este recurso.</value>
+    <value>Você não tem acesso a este recurso.</value>
   </data>
 </root>
