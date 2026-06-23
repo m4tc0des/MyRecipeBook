@@ -19,16 +19,26 @@ builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializ
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddSwaggerGen(options=>
+builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Name = "Autorization",
+        Name = "Authorization",
         Description = "Enter only your access token. Swagger will add 'Bearer' automatically.",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
         BearerFormat = "JWT"
+    });
+
+    options.AddSecurityRequirement(options =>
+    {
+        return new OpenApiSecurityRequirement
+        {
+            {
+            new OpenApiSecuritySchemeReference("Bearer", options),[]
+            } 
+        };
     });
 });
 
