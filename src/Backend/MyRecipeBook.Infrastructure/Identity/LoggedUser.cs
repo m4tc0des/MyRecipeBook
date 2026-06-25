@@ -32,8 +32,8 @@ internal sealed class LoggedUser : ILoggerUser
 
         var jsonWebToken = handler.ReadJsonWebToken(accessToken);
 
-        var subject = jsonWebToken.Claims.First(claim => claim.Type.Equals(JwtRegisteredClaimNames.Sub));
+        var subject = jsonWebToken.Subject;
 
-        return Guid.Parse(subject.Value);
+        return Guid.Parse(subject);
     }
 }
