@@ -21,7 +21,7 @@ internal sealed class LoggedUser : ILoggerUser
     {
         var userId = GetUserId();
 
-        return await _dbContext.Users.FirstAsync(user => user.Active && user.Id == userId);
+        return await _dbContext.Users.AsNoTracking().FirstAsync(user => user.Active && user.Id == userId);
     }
 
     public Guid GetUserId()
