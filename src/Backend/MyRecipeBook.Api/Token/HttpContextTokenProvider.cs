@@ -2,11 +2,11 @@
 
 namespace MyRecipeBook.Api.Token;
 
-internal sealed class HttpContextProvider : IAccessTokenProvider
+internal sealed class HttpContextTokenProvider : IAccessTokenProvider
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public HttpContextProvider(IHttpContextAccessor httpContextAccessor)
+    public HttpContextTokenProvider(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
     }
