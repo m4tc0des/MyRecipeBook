@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyRecipeBook.Domain.Security.PasswordHashing;
+using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Infrastructure.DataAcess;
 using Testcontainers.MySql;
 using WebApi.Tests.Resources;
@@ -12,7 +13,7 @@ namespace WebApi.Tests;
 
 public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    public UserIdentityManager? User_One { get; private set; }
+    public UserIdentityManager User_One { get; private set; } = default!;
 
     private readonly MySqlContainer _mySqlContainer;
     public MyRecipeBookApplicationFactory()
@@ -43,6 +44,8 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
 
         var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
 
+        var accessTokenGenerator = scope.ServiceProvider.GetRequiredService<IAccessTokenGenerator>();
+
         var (user, password) = UserBuilder.Build();
 
         user.Password = passwordHasher.HashPassword(password);
@@ -51,7 +54,9 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
 
         await dbContext.SaveChangesAsync();
 
-        User_One = new UserIdentityManager(user, password);
+        var userOneAccessToken = accessTokenGenerator.Generate(user);
+
+        User_One = new UserIdentityManager(user, password, userOneAccessToken);
     }
 
     Task IAsyncLifetime.DisposeAsync()

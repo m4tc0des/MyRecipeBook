@@ -48,7 +48,7 @@ public class RegisterUserAccountTests : BaseIntegrationTest
 
         request.Name = string.Empty;
 
-        var response = await Post(REQUEST_URI, request, culture);
+        var response = await Post(REQUEST_URI, request, culture: culture);
 
         var expectedErrorMessage = ResourceMessagesException.ResourceManager.GetString("VALIDATION_NAME_REQUIRED", new CultureInfo(culture));
 
