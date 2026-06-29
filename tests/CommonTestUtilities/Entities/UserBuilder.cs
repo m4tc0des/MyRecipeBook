@@ -1,16 +1,15 @@
 ﻿using Bogus;
 using CommonTestUtilities.Security;
-using MyRecipeBook.Domain.Entities;
 
 namespace CommonTestUtilities.Entities;
 
 public class UserBuilder
 {
-    public static (User user, string password) Build()
+    public static (MyRecipeBook.Domain.Entities.User user, string password) Build()
     {
         var (password, passwordHashed) = GenerateRandomPassword();
 
-        var user = new Faker<User>()
+        var user = new Faker<MyRecipeBook.Domain.Entities.User>()
             .RuleFor(user => user.Name, faker => faker.Person.FirstName)
             .RuleFor(user => user.Email, (faker, user) => faker.Internet.Email(user.Name))
             .RuleFor(user => user.Password, _ => passwordHashed);

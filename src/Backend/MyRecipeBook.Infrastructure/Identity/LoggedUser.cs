@@ -7,7 +7,7 @@ using MyRecipeBook.Infrastructure.DataAcess;
 
 namespace MyRecipeBook.Infrastructure.Identity;
 
-internal sealed class LoggedUser : ILoggerUser
+internal sealed class LoggedUser : ILoggedUser
 {
     private readonly IAccessTokenProvider _accessTokenProvider;
     private readonly MyRecipeBookDbContext _dbContext;

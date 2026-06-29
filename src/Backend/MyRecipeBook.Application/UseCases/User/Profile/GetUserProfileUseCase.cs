@@ -6,9 +6,9 @@ namespace MyRecipeBook.Application.UseCases.User.Profile;
 
 public class GetUserProfileUseCase : IGetUserProfileUseCase
 {
-    private readonly ILoggerUser _loggerUser;
+    private readonly ILoggedUser _loggerUser;
 
-    public GetUserProfileUseCase(ILoggerUser loggerUser)
+    public GetUserProfileUseCase(ILoggedUser loggerUser)
     {
         _loggerUser = loggerUser;
     }

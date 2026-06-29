@@ -59,6 +59,7 @@ public static class DependencyInjectionExtension
             services.AddDbContext<MyRecipeBookDbContext>(options =>
             {
                 var connectionString = configuration.GetConnectionString("DbConnection");
+
                 options.UseMySQL(connectionString!);
             });
 
@@ -83,7 +84,7 @@ public static class DependencyInjectionExtension
 
         private void AddLogeedUser()
         {
-            services.AddScoped<ILoggerUser, LoggedUser>();
+            services.AddScoped<ILoggedUser, LoggedUser>();
         }
     }
 }

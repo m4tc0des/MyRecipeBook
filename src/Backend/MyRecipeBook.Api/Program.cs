@@ -39,7 +39,7 @@ builder.Services.AddSwaggerGen(options =>
         {
             {
             new OpenApiSecuritySchemeReference("Bearer", options),[]
-            } 
+            }
         };
     });
 });

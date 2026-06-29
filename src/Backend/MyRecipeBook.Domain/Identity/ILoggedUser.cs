@@ -2,7 +2,7 @@
 
 namespace MyRecipeBook.Domain.Identity;
 
-public interface ILoggerUser
+public interface ILoggedUser
 {
     Task<User> Get();
 

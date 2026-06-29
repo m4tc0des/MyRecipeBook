@@ -18,7 +18,7 @@ public class IUserReadOnlyRepositoryBuilder
         _mock.Setup(repo => repo.ExistActiveUserWithEmail(email)).ReturnsAsync(true);
     }
 
-    public void GetByEmail(User user)
+    public void GetByEmail(MyRecipeBook.Domain.Entities.User user)
     {
         _mock.Setup(repo => repo.GetByEmail(user.Email)).ReturnsAsync(user);
     }

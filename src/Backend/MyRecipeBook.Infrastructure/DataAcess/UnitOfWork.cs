@@ -2,7 +2,7 @@
 
 namespace MyRecipeBook.Infrastructure.DataAcess;
 
-internal class UnitOfWork: IUnitOfWork
+internal class UnitOfWork : IUnitOfWork
 {
     private readonly MyRecipeBookDbContext _dbContext;
     public UnitOfWork(MyRecipeBookDbContext dbContext)
