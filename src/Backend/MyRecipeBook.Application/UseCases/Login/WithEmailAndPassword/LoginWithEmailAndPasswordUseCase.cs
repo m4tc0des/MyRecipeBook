@@ -5,7 +5,7 @@ using MyRecipeBook.Domain.Security.PasswordHashing;
 using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Exceptions.ExceptionBase;
 
-namespace MyRecipeBook.Application.UseCases.User.Login.WithEmailAndPassword;
+namespace MyRecipeBook.Application.UseCases.Login.WithEmailAndPassword;
 
 public class LoginWithEmailAndPasswordUseCase : ILoginWithEmailAndPasswordUseCase
 {
