@@ -5,7 +5,7 @@ using MyRecipeBook.Infrastructure.DataAcess;
 
 namespace MyRecipeBook.Infrastructure.Repositories;
 
-internal sealed class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository
+internal sealed class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository, IUserUpdateOnlyRepository
 {
     private readonly MyRecipeBookDbContext _dbContext;
     public UserRepository(MyRecipeBookDbContext dbContext)
@@ -31,5 +31,19 @@ internal sealed class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRe
     public async Task<User?> GetByEmail(string email)
     {
         return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Active && user.Email.Equals(email));
+    }
+
+    public async Task UpdatePassword(Guid userId, string passwordHash)
+    {
+        await _dbContext.Users.Where(user => user.Id == userId).ExecuteUpdateAsync(setters => setters.SetProperty(u => u.Password, passwordHash));
+    }
+
+    public void UpdateProfile(User user)
+    {
+        _dbContext.Users.Attach(user);
+
+        _dbContext.Entry(user).Property(user => user.Name).IsModified = true;
+
+        _dbContext.Entry(user).Property(user => user.Email).IsModified = true;
     }
 }
