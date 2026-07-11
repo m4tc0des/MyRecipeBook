@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyRecipeBook.Application.UseCases.User.Login.WithEmailAndPassword;
+using MyRecipeBook.Application.UseCases.Login.WithEmailAndPassword;
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Communication.Responses;
 
