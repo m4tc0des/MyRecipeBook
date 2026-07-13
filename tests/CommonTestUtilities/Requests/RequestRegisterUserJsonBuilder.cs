@@ -5,13 +5,13 @@ namespace CommonTestUtilities.Requests;
 
 public class RequestRegisterUserJsonBuilder
 {
-    public static RequestRegisterUserJson Build()
+    public static RequestRegisterUserJson Build(int passwordLength = 10)
     {
         return new Faker<RequestRegisterUserJson>()
 
            .RuleFor(request => request.Name, f => f.Person.FirstName)
            .RuleFor(request => request.Email, (f, user) => f.Internet.Email(user.Name))
-           .RuleFor(request => request.Password, f => f.Internet.Password());
+           .RuleFor(request => request.Password, f => f.Internet.Password(length: passwordLength));
     }
 }
 

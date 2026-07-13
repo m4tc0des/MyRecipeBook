@@ -1,11 +1,12 @@
 ﻿using Moq;
+using MyRecipeBook.Domain.Entities;
 using MyRecipeBook.Domain.Identity;
 
 namespace CommonTestUtilities.Identity;
 
 public class ILoggedUserBuilder
 {
-    public static ILoggedUser Build(MyRecipeBook.Domain.Entities.User user)
+    public static ILoggedUser Build(User user)
     {
         var mock = new Mock<ILoggedUser>();
 
