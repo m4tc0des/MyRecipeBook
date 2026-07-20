@@ -144,4 +144,49 @@
   <data name="VALIDATION_RESOURCE_ACCESS_DENIED" xml:space="preserve">
     <value>No tiene acceso a esta función.</value>
   </data>
+  <data name="VALIDATION_CURRENT_PASSWORD" xml:space="preserve">
+    <value>La contraseña actual es incorrecta.</value>
+  </data>
+  <data name="VALIDATION_PASSWORD_MIN_LENGTH" xml:space="preserve">
+    <value>La contraseña debe contener al menos 6 caracteres.</value>
+  </data>
+  <data name="VALIDATION_TITLE_REQUIRED" xml:space="preserve">
+    <value>El título es obligatorio.</value>
+  </data>
+  <data name="VALIDATION_TITLE_MAX_LENGTH" xml:space="preserve">
+    <value>El título debe tener un máximo de 250 caracteres.</value>
+  </data>
+  <data name="VALIDATION_COOK_TIME_INVALID" xml:space="preserve">
+    <value>El tiempo de preparación seleccionado no es válido.</value>
+  </data>
+  <data name="VALIDATION_DISH_TYPES_INVALID" xml:space="preserve">
+    <value>Uno de los tipos de plato seleccionados no es válido.</value>
+  </data>
+  <data name="VALIDATION_AT_LEAST_ONE_INGREDIENT" xml:space="preserve">
+    <value>Debes añadir al menos un ingrediente.</value>
+  </data>
+  <data name="VALIDATION_AT_LEAST_ONE_INSTRUCTION" xml:space="preserve">
+    <value>Debes añadir al menos una instrucción.</value>
+  </data>
+  <data name="VALIDATION_INGREDIENT_EMPTY" xml:space="preserve">
+    <value>El ingrediente no puede estar vacío.</value>
+  </data>
+  <data name="VALIDATION_INGREDIENT_MAX_LENGTH" xml:space="preserve">
+    <value>El ingrediente debe tener un máximo de 250 caracteres.</value>
+  </data>
+  <data name="VALIDATION_INSTRUCTION_ORDER_INVALID" xml:space="preserve">
+    <value>El orden de la instrucción debe ser mayor que cero.</value>
+  </data>
+  <data name="VALIDATION_INSTRUCTION_DESCRIPTION_REQUIRED" xml:space="preserve">
+    <value>La descripción de la instrucción es obligatoria.</value>
+  </data>
+  <data name="VALIDATION_INSTRUCTION_DESCRIPTION_MAX_LENGTH" xml:space="preserve">
+    <value>La descripción de la instrucción debe tener un máximo de 2.000 caracteres.</value>
+  </data>
+  <data name="VALIDATION_AT_LEAST_ONE_DISH_TYPE" xml:space="preserve">
+    <value>Es obligatorio especificar el tipo de plato.</value>
+  </data>
+  <data name="VALIDATION_INSTRUCTION_ORDER_DUPLICATED" xml:space="preserve">
+    <value>El orden de la instrucción está duplicado.</value>
+  </data>
 </root>
