@@ -9,16 +9,14 @@ internal sealed class Argon2PasswordHasher : IPasswordHasher
 {
     private const int DEGREE_OF_PARALLELISM = 1;
     private const int ITERATIONS = 2;
-    private const int MEMORY_SIZE = 20 * 1024; // 20 MB
-    private const int SALT_SIZE = 16; // 16 bytes
-    private const int HASH_SIZE = 32; // 32 bytes
+    private const int MEMORY_SIZE = 20 * 1024;
+    private const int SALT_SIZE = 16;
+    private const int HASH_SIZE = 32;
     public string HashPassword(string password)
     {
         var salt = RandomNumberGenerator.GetBytes(SALT_SIZE);
 
         var hash = HashPassword(password, salt);
-
-        //var combinedBytes = new byte[hash.Length + hash.Length];
 
         var combinedBytes = new byte[SALT_SIZE + HASH_SIZE];
 
