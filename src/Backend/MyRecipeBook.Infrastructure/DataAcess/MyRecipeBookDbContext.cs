@@ -10,4 +10,16 @@ internal class MyRecipeBookDbContext : DbContext
     public MyRecipeBookDbContext(DbContextOptions options) : base(options) { }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Recipe> Recipes { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<RecipeDishType>().ToTable("RecipeDishTypes").Property(dishType => dishType.Type).HasConversion<string>();
+        modelBuilder.Entity<RecipeIngredient>().ToTable("RecipeIngredients");
+        modelBuilder.Entity<RecipeInstruction>().ToTable("RecipeInstructions");
+
+        modelBuilder.Entity<Recipe>().Property(recipe => recipe.CookTime).HasConversion<string>();
+    }
 }
