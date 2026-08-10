@@ -189,4 +189,7 @@
   <data name="VALIDATION_INSTRUCTION_ORDER_DUPLICATED" xml:space="preserve">
     <value>The instruction order is duplicated.</value>
   </data>
+  <data name="VALIDATION_RECIPE_NOT_FOUND" xml:space="preserve">
+    <value>The recipe was not found.</value>
+  </data>
 </root>

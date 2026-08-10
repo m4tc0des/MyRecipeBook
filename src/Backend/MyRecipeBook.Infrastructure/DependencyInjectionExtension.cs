@@ -45,6 +45,8 @@ public static class DependencyInjectionExtension
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IRecipeWriteOnlyRepository, RecipeRepository>();
+
+            services.AddScoped<IRecipeReadOnlyRepository, RecipeRepository>();
         }
 
         private void AddTokensHandlers(IConfiguration configuration)

@@ -189,4 +189,7 @@
   <data name="VALIDATION_INSTRUCTION_ORDER_DUPLICATED" xml:space="preserve">
     <value>El orden de la instrucción está duplicado.</value>
   </data>
+  <data name="VALIDATION_RECIPE_NOT_FOUND" xml:space="preserve">
+    <value>No se encontró la receta.</value>
+  </data>
 </root>

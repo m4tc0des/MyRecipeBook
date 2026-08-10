@@ -250,6 +250,15 @@ namespace MyRecipeBook.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The recipe was not found..
+        /// </summary>
+        public static string VALIDATION_RECIPE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("VALIDATION_RECIPE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You don&apos;t have access to this resource..
         /// </summary>
         public static string VALIDATION_RESOURCE_ACCESS_DENIED {
