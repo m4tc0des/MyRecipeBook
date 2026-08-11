@@ -2,7 +2,7 @@
 using Shouldly;
 using System.Net;
 
-namespace WebApi.Tests.Recipe;
+namespace WebApi.Tests.Recipe.Register;
 
 public class RegisterRecipeInvalidTokensTests: BaseIntegrationTest
 {
