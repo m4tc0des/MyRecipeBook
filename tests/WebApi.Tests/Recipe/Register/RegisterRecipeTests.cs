@@ -5,7 +5,7 @@ using System.Net;
 using System.Text.Json;
 using WebApi.Tests.Resources;
 
-namespace WebApi.Tests.Recipe;
+namespace WebApi.Tests.Recipe.Register;
 
 public class RegisterRecipeTests : BaseIntegrationTest
 {
