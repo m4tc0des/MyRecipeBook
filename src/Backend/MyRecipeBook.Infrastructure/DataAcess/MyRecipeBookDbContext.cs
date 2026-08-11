@@ -21,5 +21,7 @@ internal class MyRecipeBookDbContext : DbContext
         modelBuilder.Entity<RecipeInstruction>().ToTable("RecipeInstructions");
 
         modelBuilder.Entity<Recipe>().Property(recipe => recipe.CookTime).HasConversion<string>();
+
+        modelBuilder.Entity<Recipe>().HasOne<User>().WithMany().HasForeignKey(recipe => recipe.UserId);
     }
 }

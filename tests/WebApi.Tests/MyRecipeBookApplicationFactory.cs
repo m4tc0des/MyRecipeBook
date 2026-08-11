@@ -52,13 +52,17 @@ public class MyRecipeBookApplicationFactory : WebApplicationFactory<Program>, IA
 
         user.Password = passwordHasher.HashPassword(password);
 
+        var recipe = RecipeBuilder.Build(user);
+
         await dbContext.Users.AddAsync(user);
+
+        await dbContext.Recipes.AddAsync(recipe);
 
         await dbContext.SaveChangesAsync();
 
         var userOneAccessToken = accessTokenGenerator.Generate(user);
 
-        User_One = new UserIdentityManager(user, password, userOneAccessToken);
+        User_One = new UserIdentityManager(user, recipe, password, userOneAccessToken);
 
         TOKEN_USER_NOT_FOUND_IN_DATABASE = accessTokenGenerator.Generate(new MyRecipeBook.Domain.Entities.User());
     }
