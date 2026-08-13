@@ -58,7 +58,7 @@ public class RegisterRecipeUseCaseTests
 
         var loggedUser = ILoggedUserBuilder.Build(user);
 
-        var repository = IRecipeWriteOnlyRepositoryBuilder.Build();
+        var repository = new IRecipeWriteOnlyRepositoryBuilder().Build();
 
         var unitOfWork = IUnitOfWorkBuilder.Build();
 
