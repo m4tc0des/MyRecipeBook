@@ -15,7 +15,7 @@ public class IRecipeWriteOnlyRepositoryBuilder
 
     public IRecipeWriteOnlyRepositoryBuilder DeleteById(Recipe recipe)
     {
-        _mock.Setup(repository => repository.DeleteById(recipe.Id, recipe.UserId));
+        _mock.Setup(repository => repository.DeleteById(recipe.Id, recipe.UserId)).ReturnsAsync(true);
 
         return this;
     }
