@@ -28,7 +28,6 @@ internal static class MapsterConfiguration
 
         TypeAdapterConfig<Recipe, ResponseRecipeJson>
             .NewConfig()
-            .Map(dest => dest.Instructions, entity => entity.Instructions.OrderBy(instruction => instruction.Order))
             .Map(dest => dest.Ingredients, entity => entity.Ingredients.Select(ingredient => ingredient.Item))
             .Map(dest => dest.DishTypes, entity => entity.DishTypes.Select(dishTypes => dishTypes.Type));
     }
