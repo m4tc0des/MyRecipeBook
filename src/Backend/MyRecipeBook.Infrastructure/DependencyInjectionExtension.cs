@@ -24,29 +24,23 @@ public static class DependencyInjectionExtension
         public void AddInfrastructure(IConfiguration configuration)
         {
             services.AddPasswordHasher();
-
             services.AddRepositories();
-
             services.AddTokensHandlers(configuration);
-
             services.AddDbContext(configuration);
-
             services.AddLoggedUser();
         }
 
         private void AddRepositories()
         {
             services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
-
             services.AddScoped<IUserReadOnlyRepository, UserRepository>();
-
             services.AddScoped<IUserUpdateOnlyRepository, UserRepository>();
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
             services.AddScoped<IRecipeWriteOnlyRepository, RecipeRepository>();
-
             services.AddScoped<IRecipeReadOnlyRepository, RecipeRepository>();
+            services.AddScoped<IRecipeUpdateOnlyRepository, RecipeRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         private void AddTokensHandlers(IConfiguration configuration)
