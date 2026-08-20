@@ -54,4 +54,13 @@ public class RecipesController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("recent")]
+    [ProducesResponseType(typeof(ResponseRecipesJson), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetRecent([FromServices] IGetRecentRecipesUseCase useCase)
+    {
+        var recipes = await useCase.Execute();
+
+        return Ok(recipes);
+    }
 }
