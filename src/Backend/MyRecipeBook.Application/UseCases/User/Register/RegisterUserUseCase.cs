@@ -13,7 +13,6 @@ namespace MyRecipeBook.Application.UseCases.User.Register
 {
     public class RegisterUserUseCase : IRegisterUserUseCase
     {
-
         private readonly IPasswordHasher _passwordHasher;
         private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
         private readonly IUserReadOnlyRepository _userReadOnlyRepository;
@@ -58,18 +57,18 @@ namespace MyRecipeBook.Application.UseCases.User.Register
 
             var result = validator.Validate(request);
 
-            var emailExist = await _userReadOnlyRepository.ExistActiveUserWithEmail(request.Email);
-
-            if (emailExist)
-            {
-                result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS));
-            }
-
             if (result.IsValid == false)
             {
                 var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
 
                 throw new ErrorOnValidationException(errorMessages);
+            }
+
+            var emailExist = await _userReadOnlyRepository.ExistActiveUserWithEmail(request.Email);
+
+            if (emailExist)
+            {
+                throw new ErrorOnValidationException(new List<string> { ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS });
             }
         }
     }

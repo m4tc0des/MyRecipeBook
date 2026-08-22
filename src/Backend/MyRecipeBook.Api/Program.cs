@@ -26,7 +26,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 builder.Services.AddOpenApi();
-
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -49,17 +48,11 @@ builder.Services.AddSwaggerGen(options =>
         };
     });
 });
-
 builder.Services.AddApplication();
-
 builder.Services.AddInfrastructure(builder.Configuration);
-
 builder.Services.AddScoped<IAccessTokenProvider, HttpContextTokenProvider>();
-
 builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddConfiguredLocalization();
-
 builder.Services.AddMvc(options =>
 {
     options.Filters.Add<ExceptionFilter>();
