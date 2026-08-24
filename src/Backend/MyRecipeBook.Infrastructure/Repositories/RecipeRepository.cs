@@ -35,6 +35,7 @@ internal sealed class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeRead
             .Recipes
             .AsNoTracking()
             .Where(recipe => recipe.Active && recipe.UserId == userId)
+            .OrderByDescending(recipe => recipe)
             .Take(6)
             .ToListAsync();
     }
