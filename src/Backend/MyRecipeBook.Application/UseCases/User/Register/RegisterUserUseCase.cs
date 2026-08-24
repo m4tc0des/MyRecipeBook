@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using Mapster;
+﻿using Mapster;
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Communication.Responses;
 using MyRecipeBook.Domain.Repositories;

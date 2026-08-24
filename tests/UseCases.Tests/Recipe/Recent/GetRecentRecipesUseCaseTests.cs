@@ -1,7 +1,6 @@
 using CommonTestUtilities.Entities;
 using CommonTestUtilities.Identity;
 using CommonTestUtilities.Repositories;
-using MyRecipeBook.Application.Mappings;
 using MyRecipeBook.Application.UseCases.Recipe.Recent;
 using Shouldly;
 
@@ -9,11 +8,6 @@ namespace UseCases.Tests.Recipe.Recent;
 
 public class GetRecentRecipesUseCaseTests
 {
-    static GetRecentRecipesUseCaseTests()
-    {
-        MapsterConfiguration.Configure();
-    }
-
     [Fact]
     public async Task Success()
     {
@@ -26,9 +20,7 @@ public class GetRecentRecipesUseCaseTests
         var result = await useCase.Execute();
 
         result.ShouldNotBeNull();
-
-        result.Recipes.ShouldHaveSingleItem();
-
+        result.Recipes.Count.ShouldBe(1);
         result.Recipes.First().ShouldSatisfyAllConditions(
             recipeSummary => recipeSummary.Id.ShouldBe(recipe.Id),
             recipeSummary => recipeSummary.Title.ShouldBe(recipe.Title)
@@ -36,7 +28,7 @@ public class GetRecentRecipesUseCaseTests
     }
 
     [Fact]
-    public async Task Success_Empty()
+    public async Task Success_When_ThereAreNoRecipes()
     {
         var (user, _) = UserBuilder.Build();
 
