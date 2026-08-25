@@ -29,6 +29,11 @@ internal sealed class RecipeRepository : IRecipeWriteOnlyRepository, IRecipeRead
         return rows > 0;
     }
 
+    public Task<IList<Recipe>> FilterRecipes(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<IList<Recipe>> GetRecentRecipe(Guid userId)
     {
         return await _dbContext
