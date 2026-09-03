@@ -68,7 +68,7 @@ public class RecipesController : ControllerBase
 
     [HttpPost("filter")]
     [ProducesResponseType(typeof(ResponseRecipeJson), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Filter([FromBody] RequestFilterRecipeJson? request, [FromServices] IFilterRecipeUseCase useCase)
+    public async Task<IActionResult> Filter([FromBody] RequestFilterRecipeJson? request, [FromServices] IFilterRecipesUseCase useCase)
     {
         var response = await useCase.Execute(request);
 
