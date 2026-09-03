@@ -18,7 +18,7 @@ public class GetRecentRecipesUseCase : IGetRecentRecipesUseCase
 
     public async Task<ResponseRecipesJson> Execute()
     {
-        var recipes = await _repository.GetRecentRecipe(_loggedUser.GetUserId());
+        var recipes = await _repository.GetRecentRecipes(_loggedUser.GetUserId());
 
         var response = new ResponseRecipesJson
         {
