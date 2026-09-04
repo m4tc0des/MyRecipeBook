@@ -1,4 +1,5 @@
 using Moq;
+using MyRecipeBook.Domain.Dtos;
 using MyRecipeBook.Domain.Entities;
 using MyRecipeBook.Domain.Repositories.Recipe;
 
@@ -22,7 +23,18 @@ public class IRecipeReadOnlyRepositoryBuilder
 
     public IRecipeReadOnlyRepositoryBuilder GetRecentRecipe(User user, IList<Recipe> recipes)
     {
-        _mock.Setup(repository => repository.GetRecentRecipe(user.Id)).ReturnsAsync(recipes);
+        var recipesDto = recipes.Select(recipe => new RecipeSummaryDto(recipe.Id, recipe.Title)).ToList();
+
+        _mock.Setup(repository => repository.GetRecentRecipes(user.Id)).ReturnsAsync(recipesDto);
+
+        return this;
+    }
+
+    public IRecipeReadOnlyRepositoryBuilder FilterRecipes(User user, IList<Recipe> recipes)
+    {
+        var recipesDto = recipes.Select(recipe => new RecipeSummaryDto(recipe.Id, recipe.Title)).ToList();
+
+        _mock.Setup(repository => repository.FilterRecipes(user.Id, It.IsAny<RecipeFilterDto>())).ReturnsAsync(recipesDto);
 
         return this;
     }
