@@ -7,6 +7,7 @@ using MyRecipeBook.Application.UseCases.Recipe.GetById;
 using MyRecipeBook.Application.UseCases.Recipe.Recent;
 using MyRecipeBook.Application.UseCases.Recipe.Register;
 using MyRecipeBook.Application.UseCases.Recipe.UpdateById;
+using MyRecipeBook.Application.UseCases.RequestCode;
 using MyRecipeBook.Application.UseCases.User.ChangePassword;
 using MyRecipeBook.Application.UseCases.User.Profile;
 using MyRecipeBook.Application.UseCases.User.Register;
@@ -46,5 +47,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IGetRecentRecipesUseCase, GetRecentRecipesUseCase>();
 
         services.AddScoped<IFilterRecipesUseCase, FilterRecipesUseCase>();
+
+        services.AddScoped<IRequestPasswordRecoveryCodeUseCase, RequestPasswordRecoveryCodeUseCase>();
     }
 }
